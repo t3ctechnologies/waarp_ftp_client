@@ -127,7 +127,7 @@ public class WaarpFtp4jClient {
 		if (timeout > 0) {
 			System.setProperty("ftp4j.activeDataTransfer.acceptTimeout", "" + timeout);
 		}
-		System.setProperty("ftp4j.activeDataTransfer.hostAddress", "192.168.0.119");
+		System.setProperty("ftp4j.activeDataTransfer.hostAddress", "192.168.0.117");
 
 		this.ftpClient.addCommunicationListener(new FTPCommunicationListener() {
 			public void sent(String arg0) {

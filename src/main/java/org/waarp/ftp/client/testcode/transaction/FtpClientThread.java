@@ -4,8 +4,10 @@
 package org.waarp.ftp.client.testcode.transaction;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
+import org.waarp.ftp.client.testcode.Base64_Testclass;
 import org.waarp.ftp.client.testcode.FtpClient;
 
 /**
@@ -166,13 +168,22 @@ public class FtpClientThread implements Runnable {
 					Thread.yield();
 				} else {
 					for (int i = 0; i < this.numberIteration; i++) {
-						// System.err.println(id+" transfer retr "+i);
-						if (!client.transferFile(this.localFilename, this.remoteFilename, false)) {
+						
+						if (!client.transferFile(this.localFilename, this.remoteFilename, false))
+						{
 							System.err.println((new Date()) + " Cant retrieve file active mode " + this.id);
 							FtpClient.numberKO.incrementAndGet();
 							return;
-						} else {
+						}
+						else {
 							FtpClient.numberOK.incrementAndGet();
+							File finalFile=new File(localFilename);
+							
+							if(finalFile.exists())
+							{
+								Base64_Testclass.decodeFile(localFilename, finalFile.getParent()+"\\"+"New"+finalFile.getName());
+								finalFile.delete();
+							}
 							if (delay > 0) {
 								try {
 									Thread.sleep(delay);
@@ -184,6 +195,9 @@ public class FtpClientThread implements Runnable {
 					}
 				}
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			// System.err.println(id+" disconnect");
 			client.logout();

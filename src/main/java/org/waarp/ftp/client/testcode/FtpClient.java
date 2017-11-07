@@ -3,13 +3,13 @@
  */
 package org.waarp.ftp.client.testcode;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.waarp.common.logging.WaarpLoggerFactory;
-import org.waarp.common.logging.WaarpSlf4JLoggerFactory;
 import org.waarp.ftp.client.testcode.transaction.Ftp4JClientTransactionTest;
 import org.waarp.ftp.client.testcode.transaction.FtpClientThread;
 
@@ -25,15 +25,16 @@ public class FtpClient {
 
 	public static AtomicLong numberKO = new AtomicLong(0);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		System.out.println("Client started.");
 		init(args[0], Integer.parseInt(args[1]));
 	}
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static boolean init(String fileName,int mode) {
+	public static boolean init(String fileName,int mode) throws IOException {
 		//WaarpLoggerFactory.setDefaultFactory(new WaarpSlf4JLoggerFactory(null));
 		System.setProperty("javax.net.debug", "false");
 
@@ -44,25 +45,29 @@ public class FtpClient {
 		String account = null;
 		String localFilename = null;
 		int numberThread = 1;
-		int numberIteration = 2;
+		int numberIteration = 1;
 		if (fileName == null) {
 			System.err.println("Usage: " + FtpClient.class.getSimpleName()
 					+ " server port user pwd acct localfilename nbThread nbIter");
 			System.exit(1);
 		}
-		server = "192.168.0.122";
+		server = "192.168.0.116";
 		port = 21;
 		username = "test";
 		passwd = "pwdhttp";
 		account = "test";
-		localFilename = fileName;
-		numberThread = Integer.parseInt("1");
-		numberIteration = Integer.parseInt("2");
-
-		/*
-		 * 11 - Send -11 - receive
-		 */
 		int type = mode;
+		if(type==11 || type==-11)
+		{
+		File linsharefile=new File(fileName);
+		String EncodedFile=linsharefile.getName();
+		localFilename = Base64_Testclass.encodeFile(fileName, EncodedFile);
+		}
+		else{
+			localFilename = fileName;
+		}
+		numberThread = Integer.parseInt("1");
+		numberIteration = Integer.parseInt("1");
 
 		int delay = 0;
 		// if (args.length > 9) {

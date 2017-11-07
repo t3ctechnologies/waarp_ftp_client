@@ -33,6 +33,7 @@ public class Ftp4JClientTransactionTest extends WaarpFtp4jClient {
     public boolean transferFile(String local, String remote, boolean store) 
     {
     	
+    	 //for(int i=0; i<2;){
          boolean status = super.transferFile(local, remote, store ? 1 : -1);
     	
         /*
@@ -44,5 +45,32 @@ public class Ftp4JClientTransactionTest extends WaarpFtp4jClient {
          * System.err.println("XSHA1: "+string); } }
          */
         return status;
+        
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
