@@ -171,9 +171,12 @@ public class FtpClientThread implements Runnable {
 						
 						if (!client.transferFile(this.localFilename, this.remoteFilename, false))
 						{
-							System.err.println((new Date()) + " Cant retrieve file active mode " + this.id);
-							FtpClient.numberKO.incrementAndGet();
-							return;
+							if(! FtpClient.init(localFilename,9))
+							{
+								System.err.println((new Date()) + " Cant retrieve file active mode " + this.id);
+								FtpClient.numberKO.incrementAndGet();
+								return;
+							}
 						}
 						else {
 							FtpClient.numberOK.incrementAndGet();
@@ -181,8 +184,10 @@ public class FtpClientThread implements Runnable {
 							
 							if(finalFile.exists())
 							{
-								Base64_Testclass.decodeFile(localFilename, finalFile.getParent()+"\\"+"New"+finalFile.getName());
+								String newStr = finalFile.getParent()+"\\"+"New"+finalFile.getName();
+								String decodedStr=Base64_Testclass.decodeFile(localFilename, newStr);
 								finalFile.delete();
+								new File(decodedStr).renameTo(finalFile);
 							}
 							if (delay > 0) {
 								try {

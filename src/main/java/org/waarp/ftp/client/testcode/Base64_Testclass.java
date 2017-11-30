@@ -7,12 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Base64;
 
-public class Base64_Testclass
-{
+public class Base64_Testclass {
 	/**
-	 * Defines the length of bytes read from the input file in one iteration.
-	 * It must be a multiple of 3 and 4. It affects the heap used.
-	 * Current value is 12 kB.
+	 * Defines the length of bytes read from the input file in one iteration. It
+	 * must be a multiple of 3 and 4. It affects the heap used. Current value is 12
+	 * kB.
 	 */
 	private static final int LENGTH = 12288;
 
@@ -81,10 +80,10 @@ public class Base64_Testclass
 			base64[a++] = (byte) ALPHABET[b2 & MASK_ENCODE];
 		}
 		switch (size % 3) {
-			case 1:
-				base64[--a] = '=';
-			case 2:
-				base64[--a] = '=';
+		case 1:
+			base64[--a] = '=';
+		case 2:
+			base64[--a] = '=';
 		}
 		return base64;
 	}
@@ -142,16 +141,16 @@ public class Base64_Testclass
 		int bytesRead = LENGTH;
 		while (bytesRead == LENGTH) {
 			bytesRead = inputStream.read(inputBytes);
-			byte[] outputBytes,outputBytes1,outputBytes2;
+			byte[] outputBytes, outputBytes1, outputBytes2;
 			if (isEncode) {
 				outputBytes = Base64_Testclass.encode(inputBytes, bytesRead);
-				Base64.Encoder encoder=Base64.getEncoder();
-				//outputBytes = encoder.encode(outputBytes1);
+				//Base64.Encoder encoder = Base64.getEncoder();
+				// outputBytes = encoder.encode(outputBytes1);
 			} else {
 				outputBytes = Base64_Testclass.decode(new String(inputBytes, 0, bytesRead));
-				Base64.Decoder decoder=Base64.getDecoder();
-				//outputBytes = decoder.decode(outputBytes2);
-			} 
+				//Base64.Decoder decoder = Base64.getDecoder();
+				// outputBytes = decoder.decode(outputBytes2);
+			}
 			outputStream.write(outputBytes);
 		}
 
@@ -167,7 +166,7 @@ public class Base64_Testclass
 	 *            The name of the file to encode.
 	 * @param outputFileName
 	 *            The name of the file to write the result of the conversion.
-	 * @return 
+	 * @return
 	 * 
 	 * @throws IOException
 	 *             If an error occurs during reading or writing file.
@@ -187,8 +186,8 @@ public class Base64_Testclass
 	 * @throws IOException
 	 *             If an error occurs during reading or writing file.
 	 */
-	public static void decodeFile(final String inputFileName, final String outputFileName) throws IOException {
-		convert(inputFileName, outputFileName, false);
+	public static String decodeFile(final String inputFileName, final String outputFileName) throws IOException {
+		return convert(inputFileName, outputFileName, false);
 	}
 
 	/**
@@ -200,4 +199,3 @@ public class Base64_Testclass
 		return new String(ALPHABET);
 	}
 }
-

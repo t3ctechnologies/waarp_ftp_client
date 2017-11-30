@@ -51,7 +51,7 @@ public class FtpClient {
 					+ " server port user pwd acct localfilename nbThread nbIter");
 			System.exit(1);
 		}
-		server = "192.168.0.116";
+		server = "192.168.0.107";
 		port = 21;
 		username = "test";
 		passwd = "pwdhttp";
@@ -177,7 +177,8 @@ public class FtpClient {
 				client.disconnect();
 			}
 		}
-
+		// TODO Deleting encoded file
+		new File(localFilename).delete();
 		return true;
 	}
 

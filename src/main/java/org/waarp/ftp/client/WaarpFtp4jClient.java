@@ -32,7 +32,6 @@ import javax.net.ssl.X509TrustManager;
 
 import org.waarp.common.logging.WaarpLogger;
 import org.waarp.common.logging.WaarpLoggerFactory;
-import org.waarp.ftp.client.testcode.FtpClient;
 
 import it.sauronsoftware.ftp4j.FTPAbortedException;
 import it.sauronsoftware.ftp4j.FTPClient;
@@ -127,7 +126,9 @@ public class WaarpFtp4jClient {
 		if (timeout > 0) {
 			System.setProperty("ftp4j.activeDataTransfer.acceptTimeout", "" + timeout);
 		}
-		System.setProperty("ftp4j.activeDataTransfer.hostAddress", "192.168.0.117");
+		
+		// TODO hostAddress
+		System.setProperty("ftp4j.activeDataTransfer.hostAddress", "192.168.0.106");
 
 		this.ftpClient.addCommunicationListener(new FTPCommunicationListener() {
 			public void sent(String arg0) {
@@ -603,9 +604,9 @@ public class WaarpFtp4jClient {
 		}
 	}
 
-	/*public void sentToWaarp(String filePath) {
-		FtpClient client = new FtpClient();
-		client.init(filePath);
-	}*/
+	/*
+	 * public void sentToWaarp(String filePath) { FtpClient client = new
+	 * FtpClient(); client.init(filePath); }
+	 */
 
 }
